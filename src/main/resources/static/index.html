@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Scout — AI sourcing refinement</title>
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">S</span><div><strong>Scout</strong><small>AI sourcing workspace</small></div></div>
+    <div id="sessionBadge" class="session-badge hidden">LIVE SEARCH</div>
+  </header>
+
+  <main id="startView" class="start-view">
+    <section class="hero">
+      <div class="eyebrow">FLEXIPLE SOURCING LOOP</div>
+      <h1>Find the right people.<br><em>Refine until it feels right.</em></h1>
+      <p>Describe the role like you would search Google. Scout turns it into objective filters, a fit rubric, and a ranked shortlist you can teach with feedback.</p>
+    </section>
+    <section class="search-box">
+      <label for="query">What are you looking for?</label>
+      <textarea id="query" rows="3" placeholder="e.g. RDS developers with 4-7 years of experience who have worked at startups, for a role based in Bangalore."></textarea>
+      <div class="search-actions">
+        <div class="examples">
+          <span>Try:</span>
+          <button data-example="RDS developers with 4-7 years of experience who have worked at startups, for a role based in Bangalore.">RDS + startup + Bangalore</button>
+          <button data-example="Backend engineers with 3-6 years, strong PostgreSQL and Redis, based in Bangalore.">Postgres + Redis</button>
+        </div>
+        <button id="searchBtn" class="primary">Start sourcing <span>→</span></button>
+      </div>
+    </section>
+    <div class="trust-row"><span>● Real LLM reasoning</span><span>● Local 48-profile talent pool</span><span>● No data leaves your session except LLM requests</span></div>
+  </main>
+
+  <main id="workspace" class="workspace hidden">
+    <aside class="left-panel">
+      <div class="panel-title">Search brief <button id="newSearch" class="icon-btn" title="New search">＋</button></div>
+      <div class="brief" id="briefText"></div>
+
+      <div class="section-head"><span>OBJECTIVE FILTERS</span><button id="saveFilters" class="text-btn">Apply</button></div>
+      <div id="filters" class="filters"></div>
+
+      <div class="section-head"><span>FIT RUBRIC</span><button id="saveRubric" class="text-btn">Apply</button></div>
+      <div id="rubric" class="rubric"></div>
+
+      <div class="pool-note"><strong id="filteredCount">0</strong> profiles pass the hard filters<div>LLM ranks the survivors.</div></div>
+    </aside>
+
+    <section class="results-panel">
+      <div class="results-head">
+        <div>
+          <div class="eyebrow">SHORTLIST</div>
+          <h2>Best matches</h2>
+          <p id="resultsMeta"></p>
+        </div>
+        <button id="freezeBtn" class="freeze">Freeze search <span>↗</span></button>
+      </div>
+
+      <div id="changeBanner" class="change-banner hidden"></div>
+      <div id="errorBanner" class="error-banner hidden"></div>
+      <div id="loading" class="loading hidden"><div class="spinner"></div><div><strong id="loadingTitle">Thinking…</strong><p id="loadingText">Turning the brief into a recruiter-ready search.</p></div></div>
+      <div id="emptyState" class="empty hidden">
+        <div class="empty-icon">⌕</div><h3>No profiles pass these filters</h3><p>Try loosening an objective filter, or tell Scout what you want to change in the feedback panel.</p>
+      </div>
+      <div id="candidates" class="candidates"></div>
+    </section>
+
+    <aside class="chat-panel">
+      <div class="chat-head"><div class="chat-dot"></div><div><strong>Refinement</strong><small>Teach Scout what “good” means</small></div></div>
+      <div id="chatMessages" class="chat-messages">
+        <div class="chat-message assistant">Review the shortlist and tell me what is right or wrong. I’ll adjust the search and explain the change.</div>
+      </div>
+      <div class="feedback-quick">
+        <button data-feedback="is a strong match">✓ Match</button>
+        <button data-feedback="is not a match">× Not a match</button>
+      </div>
+      <div class="composer">
+        <textarea id="feedback" rows="3" placeholder="e.g. 1 is too junior, 2 and 4 are right. Prioritise deeper RDS ownership."></textarea>
+        <button id="refineBtn" class="primary full">Refine search <span>↗</span></button>
+      </div>
+      <div class="chat-hint">Tip: name candidates by number. Natural-language feedback works best.</div>
+    </aside>
+  </main>
+
+  <div id="freezeModal" class="modal hidden">
+    <div class="modal-card">
+      <button id="closeModal" class="modal-close">×</button>
+      <div class="eyebrow">SEARCH FROZEN</div>
+      <h2>Your final shortlist</h2>
+      <p class="modal-sub">This is the version you would hand to a recruiter. Filters and rubric are no longer changing.</p>
+      <div id="frozenSummary"></div>
+      <button id="doneBtn" class="primary full">Done</button>
+    </div>
+  </div>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>
