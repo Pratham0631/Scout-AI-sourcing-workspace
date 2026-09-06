@@ -1,6 +1,6 @@
 # Flexiple Sourcing — Refinement Loop
 
-A small full-stack implementation of the **Sourcing Refinement Loop** from the Flexiple engineering assessment.
+A small full-stack implementation of the **Sourcing Refinement Loop**.
 
 The application intentionally focuses on one search session:
 
@@ -30,7 +30,7 @@ The supplied 48-profile fictional talent pool is included in the repository and 
 
 ## 2. Why this design
 
-The assessment says to spend the majority of the time on the quality of the loop rather than building unrelated infrastructure.
+The goal is to spend the majority of the time on the quality of the loop rather than building unrelated infrastructure.
 
 So this project deliberately has:
 
@@ -41,7 +41,7 @@ So this project deliberately has:
 - no fake LLM responses
 - no simulated 98M-person database
 
-Instead, the implementation concentrates on the four things the assessment evaluates most directly:
+Instead, the implementation concentrates on the four most important things:
 
 - a real end-to-end LLM loop
 - trustworthy refinement state
@@ -119,7 +119,6 @@ LLM_MODEL=google/gemini-2.5-flash
 
 If your provider uses a different OpenAI-compatible endpoint/model, change those two values.
 
-> Do not commit `.env`.
 
 ### Step 3 — run
 
@@ -264,8 +263,6 @@ Stores the current state in memory:
 - filtered count
 - frozen state
 
-This is enough for the assessment's single-session scope without introducing a database.
-
 ### `LlmClient`
 
 The only class that talks to the external LLM.
@@ -307,10 +304,6 @@ For scores, the backend validates:
 Invalid output is rejected instead of being applied to the search state.
 
 ## 8. Evidence-backed explanations
-
-One important assessment requirement is:
-
-> Explanations for why a profile matched must cite actual fields from that profile.
 
 The scoring prompt explicitly asks the LLM for evidence such as:
 
@@ -398,8 +391,6 @@ Most importantly:
 The UI keeps the last successful filters, rubric and shortlist and offers Retry.
 
 ## 11. Direct editing
-
-The assessment explicitly asks for filters and rubric to be editable.
 
 The left panel exposes:
 
@@ -576,56 +567,3 @@ Those would add infrastructure without improving the specific sourcing refinemen
 | Final filters/rubric/ranked list | Freeze modal |
 | Deliberate near misses | Hard filter + subjective ranking + refinement |
 | Single-session scope | In-memory `SessionStore` |
-
-## 18. Loom walkthrough suggestion
-
-Keep the walkthrough under 10–12 minutes.
-
-Suggested sequence:
-
-**0:00–1:00 — Product**
-
-Explain the goal and show the initial search screen.
-
-**1:00–3:00 — Initial search**
-
-Enter:
-
-```text
-RDS developers with 4-7 years of experience who have worked at startups, for a role based in Bangalore.
-```
-
-Show the generated filters and rubric.
-
-**3:00–5:00 — Shortlist**
-
-Open candidate cards and point out the evidence tied to real profile fields.
-
-**5:00–7:30 — Refinement**
-
-Say something like:
-
-```text
-1 is too junior. 2 and 4 are strong matches.
-Prioritise candidates with deeper RDS ownership.
-```
-
-Show the updated filters/rubric and the change explanation.
-
-**7:30–9:00 — Direct edit**
-
-Change one filter manually and apply it.
-
-**9:00–10:00 — Failure/recovery**
-
-Temporarily use an invalid/unavailable LLM configuration, show the friendly error, then restore the configuration and Retry.
-
-**10:00–11:00 — Freeze**
-
-Freeze the search and show the final shortlist, filters and rubric.
-
-## 19. Important submission note
-
-The assignment asks for a Loom walkthrough showing a failure/recovery moment. The application includes the recovery UI, but a genuine provider failure must be demonstrated during your recording by temporarily using an invalid API key/model or otherwise causing the configured provider to return an error.
-
-The application never uses a fake/canned LLM response as a fallback.
