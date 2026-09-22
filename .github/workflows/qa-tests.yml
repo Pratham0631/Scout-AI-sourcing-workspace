@@ -1,0 +1,88 @@
+name: QA Automation Tests
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run Automated QA Suite
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout codebase
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Setup Java 17 for Spring Boot
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      # 3. Start Spring Boot SUT in background
+      - name: Start Spring Boot Application
+        run: |
+          mvn spring-boot:run &
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY || 'test-mock-key' }}
+
+      # 4. Setup Python
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: 'qa-automation/requirements.txt'
+
+      # 5. Install Python dependencies
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r qa-automation/requirements.txt
+
+      # 6. Install Playwright Browsers
+      - name: Install Playwright Chromium
+        run: |
+          playwright install --with-deps chromium
+
+      # 7. Wait for Spring Boot to be healthy
+      - name: Wait for Application Readiness
+        run: |
+          timeout 60s bash -c 'until curl --silent --fail http://localhost:8080/api/health | grep "ok"; do sleep 3; echo "Waiting for backend..."; done'
+
+      # 8. Run Smoke Tests
+      - name: Run Smoke Tests
+        run: |
+          cd qa-automation
+          pytest -m smoke --html=reports/smoke-report.html --self-contained-html
+
+      # 9. Run Regression Suite (API + UI)
+      - name: Run Regression Suite
+        if: always()
+        run: |
+          cd qa-automation
+          pytest -m regression --html=reports/regression-report.html --self-contained-html
+
+      # 10. Upload HTML Test Reports
+      - name: Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-reports
+          path: qa-automation/reports/*.html
+          retention-days: 14
+
+      # 11. Upload Failure Screenshots if any test failed
+      - name: Upload Failure Screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failure-screenshots
+          path: qa-automation/reports/screenshots/
+          retention-days: 14

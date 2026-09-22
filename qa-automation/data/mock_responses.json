@@ -1,0 +1,181 @@
+{
+  "search_success": {
+    "sessionId": "mock-session-001",
+    "status": "ready",
+    "filters": {
+      "skills": ["AWS RDS", "PostgreSQL"],
+      "minYearsExperience": 4,
+      "maxYearsExperience": 7,
+      "location": "Bangalore",
+      "companyTypes": ["startup"]
+    },
+    "rubric": {
+      "criteria": [
+        {"name": "RDS & Database Depth", "description": "Direct hands-on experience tuning and running PostgreSQL on AWS RDS", "weight": 45},
+        {"name": "Startup Environment", "description": "Past experience thriving in agile, fast-paced startup cultures", "weight": 35},
+        {"name": "Backend Ownership", "description": "System architecture and end-to-end service delivery", "weight": 20}
+      ]
+    },
+    "results": [
+      {
+        "profile": {
+          "id": "p001",
+          "name": "Aarav Sharma",
+          "current_title": "Senior Backend Engineer",
+          "years_experience": 6,
+          "location": "Bangalore",
+          "current_company": "ZetaCloud",
+          "current_company_type": "startup",
+          "skills": ["AWS RDS", "PostgreSQL", "Java", "Docker"],
+          "past_companies": [
+            {"company": "FinTech Labs", "company_type": "startup", "title": "Software Engineer", "years": 3}
+          ],
+          "education": "B.Tech Computer Science",
+          "summary": "Cloud backend engineer specializing in RDS PostgreSQL performance and clustering."
+        },
+        "score": 94,
+        "explanation": "Exceptional fit with 6 years of experience, heavy AWS RDS and PostgreSQL ownership at product startups.",
+        "evidence": ["skills: AWS RDS, PostgreSQL", "years_experience: 6", "location: Bangalore", "current_company_type: startup"]
+      },
+      {
+        "profile": {
+          "id": "p002",
+          "name": "Priya Nair",
+          "current_title": "Database Engineer",
+          "years_experience": 5,
+          "location": "Bangalore",
+          "current_company": "QuickPay",
+          "current_company_type": "startup",
+          "skills": ["PostgreSQL", "AWS RDS", "Python", "Redis"],
+          "past_companies": [
+            {"company": "NeoApp", "company_type": "startup", "title": "Junior Engineer", "years": 2}
+          ],
+          "education": "M.S. Software Engineering",
+          "summary": "Focused on relational database design, query optimization, and RDS deployments."
+        },
+        "score": 89,
+        "explanation": "Strong candidate matching all startup and database requirements in Bangalore.",
+        "evidence": ["skills: PostgreSQL, AWS RDS", "years_experience: 5", "location: Bangalore", "current_company_type: startup"]
+      }
+    ],
+    "filteredCount": 6,
+    "warnings": [],
+    "error": null
+  },
+  "search_empty": {
+    "sessionId": "mock-session-empty",
+    "status": "empty",
+    "filters": {
+      "skills": ["Cobol"],
+      "minYearsExperience": 40,
+      "maxYearsExperience": 50,
+      "location": "Antarctica",
+      "companyTypes": ["enterprise"]
+    },
+    "rubric": {
+      "criteria": [
+        {"name": "Legacy Fit", "description": "Decades of mainframe mastery", "weight": 50},
+        {"name": "Enterprise Stability", "description": "Large corporate stability", "weight": 50}
+      ]
+    },
+    "results": [],
+    "filteredCount": 0,
+    "warnings": [],
+    "error": null
+  },
+  "refine_success": {
+    "sessionId": "mock-session-001",
+    "status": "ready",
+    "filters": {
+      "skills": ["AWS RDS", "PostgreSQL"],
+      "minYearsExperience": 5,
+      "maxYearsExperience": 8,
+      "location": "Bangalore",
+      "companyTypes": ["startup", "scaleup"]
+    },
+    "rubric": {
+      "criteria": [
+        {"name": "Deep RDS Ownership", "description": "Architectural leadership in AWS RDS database operations", "weight": 50},
+        {"name": "Startup Experience", "description": "Autonomous product delivery in startups or scaleups", "weight": 30},
+        {"name": "Seniority", "description": "Demonstrated technical leadership and mentoring", "weight": 20}
+      ]
+    },
+    "results": [
+      {
+        "profile": {
+          "id": "p001",
+          "name": "Aarav Sharma",
+          "current_title": "Senior Backend Engineer",
+          "years_experience": 6,
+          "location": "Bangalore",
+          "current_company": "ZetaCloud",
+          "current_company_type": "startup",
+          "skills": ["AWS RDS", "PostgreSQL", "Java", "Docker"],
+          "past_companies": [
+            {"company": "FinTech Labs", "company_type": "startup", "title": "Software Engineer", "years": 3}
+          ],
+          "education": "B.Tech Computer Science",
+          "summary": "Cloud backend engineer specializing in RDS PostgreSQL performance."
+        },
+        "score": 96,
+        "explanation": "Senior candidate with deep RDS expertise, matching refined seniority threshold.",
+        "evidence": ["skills: AWS RDS, PostgreSQL", "years_experience: 6", "location: Bangalore"]
+      }
+    ],
+    "filteredCount": 5,
+    "changes": [
+      {
+        "field": "Experience",
+        "before": "4-7 years",
+        "after": "5-8 years",
+        "reason": "Elevated minimum experience based on recruiter request to filter out junior profiles."
+      },
+      {
+        "field": "Company Background",
+        "before": "startup",
+        "after": "startup, scaleup",
+        "reason": "Included scaleups to broaden eligible senior pool."
+      }
+    ],
+    "warnings": [],
+    "error": null
+  },
+  "freeze_success": {
+    "sessionId": "mock-session-001",
+    "status": "frozen",
+    "filters": {
+      "skills": ["AWS RDS", "PostgreSQL"],
+      "minYearsExperience": 5,
+      "maxYearsExperience": 8,
+      "location": "Bangalore",
+      "companyTypes": ["startup", "scaleup"]
+    },
+    "rubric": {
+      "criteria": [
+        {"name": "Deep RDS Ownership", "description": "Architectural leadership in AWS RDS database operations", "weight": 50},
+        {"name": "Startup Experience", "description": "Autonomous product delivery in startups or scaleups", "weight": 30},
+        {"name": "Seniority", "description": "Demonstrated technical leadership and mentoring", "weight": 20}
+      ]
+    },
+    "finalShortlist": [
+      {
+        "profile": {
+          "id": "p001",
+          "name": "Aarav Sharma",
+          "current_title": "Senior Backend Engineer",
+          "years_experience": 6,
+          "location": "Bangalore",
+          "current_company": "ZetaCloud",
+          "current_company_type": "startup",
+          "skills": ["AWS RDS", "PostgreSQL", "Java"],
+          "past_companies": [],
+          "education": "B.Tech Computer Science",
+          "summary": "Cloud backend engineer"
+        },
+        "score": 96,
+        "explanation": "Senior candidate with deep RDS expertise.",
+        "evidence": ["skills: AWS RDS"]
+      }
+    ]
+  }
+}

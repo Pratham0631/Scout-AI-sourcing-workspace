@@ -1,0 +1,114 @@
+{
+  "search_queries": {
+    "valid_rds": "RDS developers with 4-7 years of experience who have worked at startups, for a role based in Bangalore.",
+    "valid_postgres": "Backend engineers with 3-6 years, strong PostgreSQL and Redis, based in Bangalore.",
+    "valid_generic": "Senior Python and Kubernetes engineers with startup background.",
+    "empty": "",
+    "whitespace": "     ",
+    "zero_match_brief": "Cobol and Fortran architect with 45 years experience in Antarctica at enterprise"
+  },
+  "edit_payloads": {
+    "valid_edits": {
+      "filters": {
+        "skills": ["AWS RDS", "PostgreSQL"],
+        "minYearsExperience": 4,
+        "maxYearsExperience": 8,
+        "location": "Bangalore",
+        "companyTypes": ["startup", "scaleup"]
+      },
+      "rubric": {
+        "criteria": [
+          {"name": "Technical Depth", "description": "Hands-on expertise with AWS RDS and PostgreSQL internals", "weight": 40},
+          {"name": "Startup Experience", "description": "Proven ownership in fast-paced product startup environments", "weight": 35},
+          {"name": "System Design", "description": "Experience building reliable distributed backends", "weight": 25}
+        ]
+      }
+    },
+    "invalid_experience_min_greater_than_max": {
+      "filters": {
+        "skills": ["Python"],
+        "minYearsExperience": 10,
+        "maxYearsExperience": 4,
+        "location": "Bangalore",
+        "companyTypes": ["startup"]
+      },
+      "rubric": {
+        "criteria": [
+          {"name": "Skills", "description": "Core competencies", "weight": 50},
+          {"name": "Domain", "description": "Relevant domain", "weight": 30},
+          {"name": "Culture", "description": "Fit and communication", "weight": 20}
+        ]
+      }
+    },
+    "invalid_experience_negative": {
+      "filters": {
+        "skills": ["Java"],
+        "minYearsExperience": -2,
+        "maxYearsExperience": 5,
+        "location": "Bangalore",
+        "companyTypes": ["enterprise"]
+      },
+      "rubric": {
+        "criteria": [
+          {"name": "Criterion 1", "description": "Desc 1", "weight": 40},
+          {"name": "Criterion 2", "description": "Desc 2", "weight": 30},
+          {"name": "Criterion 3", "description": "Desc 3", "weight": 30}
+        ]
+      }
+    },
+    "invalid_rubric_weight_sum": {
+      "filters": {
+        "skills": ["PostgreSQL"],
+        "minYearsExperience": 3,
+        "maxYearsExperience": 6,
+        "location": "Bangalore",
+        "companyTypes": ["startup"]
+      },
+      "rubric": {
+        "criteria": [
+          {"name": "Technical Depth", "description": "Depth of experience", "weight": 40},
+          {"name": "System Design", "description": "Architecture skills", "weight": 30},
+          {"name": "Culture", "description": "Values alignment", "weight": 20}
+        ]
+      }
+    },
+    "invalid_rubric_criteria_count_too_low": {
+      "filters": {
+        "skills": ["PostgreSQL"],
+        "minYearsExperience": 3,
+        "maxYearsExperience": 6,
+        "location": "Bangalore",
+        "companyTypes": ["startup"]
+      },
+      "rubric": {
+        "criteria": [
+          {"name": "Criterion 1", "description": "Desc 1", "weight": 50},
+          {"name": "Criterion 2", "description": "Desc 2", "weight": 50}
+        ]
+      }
+    }
+  },
+  "refine_payloads": {
+    "valid_feedback": "Candidate 1 is too junior, 2 and 4 are right. Prioritise deeper RDS ownership.",
+    "loosen_feedback": "Loosen experience requirement down to 3 years and include scaleups.",
+    "empty_feedback": ""
+  },
+  "auth_credentials": {
+    "valid": {
+      "email": "recruiter@flexiple.com",
+      "password": "RecruiterPass123!"
+    },
+    "invalid_password": {
+      "email": "recruiter@flexiple.com",
+      "password": "WrongPassword999!"
+    },
+    "non_existent_user": {
+      "email": "ghost@flexiple.com",
+      "password": "Password123!"
+    },
+    "empty_fields": {
+      "email": "",
+      "password": ""
+    }
+  }
+}
