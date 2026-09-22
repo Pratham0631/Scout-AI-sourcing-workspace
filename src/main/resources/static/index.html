@@ -28,8 +28,19 @@
           <button data-example="RDS developers with 4-7 years of experience who have worked at startups, for a role based in Bangalore.">RDS + startup + Bangalore</button>
           <button data-example="Backend engineers with 3-6 years, strong PostgreSQL and Redis, based in Bangalore.">Postgres + Redis</button>
         </div>
-        <button id="searchBtn" class="primary">Start sourcing <span>→</span></button>
+        <button id="searchBtn" class="primary">
+          <span class="btn-spinner hidden" aria-hidden="true"></span>
+          <span class="btn-label">Start sourcing <span>→</span></span>
+        </button>
       </div>
+      <div id="startLoading" class="start-loading hidden" aria-live="polite">
+        <div class="spinner"></div>
+        <div>
+          <strong>Thinking…</strong>
+          <p>Calling the LLM for filters and rubric, then ranking matches.</p>
+        </div>
+      </div>
+      <div id="startError" class="error-banner hidden"></div>
     </section>
     <div class="trust-row"><span>● Real LLM reasoning</span><span>● Local 48-profile talent pool</span><span>● No data leaves your session except LLM requests</span></div>
   </main>
@@ -92,6 +103,14 @@
       <p class="modal-sub">This is the version you would hand to a recruiter. Filters and rubric are no longer changing.</p>
       <div id="frozenSummary"></div>
       <button id="doneBtn" class="primary full">Done</button>
+    </div>
+  </div>
+
+  <div id="globalLoading" class="global-loading hidden" aria-live="polite" aria-busy="true">
+    <div class="global-loading-card">
+      <div class="spinner large"></div>
+      <strong id="globalLoadingTitle">Thinking…</strong>
+      <p id="globalLoadingText">Turning the brief into a recruiter-ready search.</p>
     </div>
   </div>
 </div>

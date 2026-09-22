@@ -16,14 +16,56 @@ function setLoading(show, title="Thinking…", text="Turning the brief into a re
   $("loading").classList.toggle("hidden", !show);
   $("loadingTitle").textContent = title;
   $("loadingText").textContent = text;
+
+  const onStart = !$("startView").classList.contains("hidden");
+  const startLoading = $("startLoading");
+  if (startLoading) {
+    startLoading.classList.toggle("hidden", !(show && onStart));
+    if (show && onStart) {
+      startLoading.querySelector("strong").textContent = title;
+      startLoading.querySelector("p").textContent = text;
+    }
+  }
+
+  const global = $("globalLoading");
+  if (global) {
+    // Full-screen overlay for start search; workspace still uses the inline banner too.
+    global.classList.toggle("hidden", !(show && onStart));
+    $("globalLoadingTitle").textContent = title;
+    $("globalLoadingText").textContent = text;
+  }
+}
+function setStartButtonLoading(loading) {
+  const btn = $("searchBtn");
+  if (!btn) return;
+  btn.disabled = loading;
+  const spinner = btn.querySelector(".btn-spinner");
+  const label = btn.querySelector(".btn-label");
+  if (spinner) spinner.classList.toggle("hidden", !loading);
+  if (label) label.innerHTML = loading ? "Sourcing…" : 'Start sourcing <span>→</span>';
 }
 function setError(message, retry=true) {
-  const el=$("errorBanner");
-  el.classList.toggle("hidden", !message);
-  el.innerHTML = message ? `<span>${esc(message)}</span>${retry ? '<button class="retry" id="retryBtn">Retry</button>' : ''}` : "";
-  if (retry && message) $("retryBtn").onclick = () => {
-    if (state.lastAction) state.lastAction();
-  };
+  const onStart = !$("startView").classList.contains("hidden");
+  const startError = $("startError");
+  const el = $("errorBanner");
+
+  if (startError) {
+    startError.classList.toggle("hidden", !(message && onStart));
+    startError.innerHTML = (message && onStart)
+      ? `<span>${esc(message)}</span>${retry ? '<button class="retry" id="startRetryBtn">Retry</button>' : ''}`
+      : "";
+    if (message && onStart && retry) {
+      $("startRetryBtn").onclick = () => { if (state.lastAction) state.lastAction(); };
+    }
+  }
+
+  el.classList.toggle("hidden", !message || onStart);
+  el.innerHTML = (message && !onStart)
+    ? `<span>${esc(message)}</span>${retry ? '<button class="retry" id="retryBtn">Retry</button>' : ''}`
+    : "";
+  if (retry && message && !onStart) {
+    $("retryBtn").onclick = () => { if (state.lastAction) state.lastAction(); };
+  }
 }
 function addChat(text, who="assistant") {
   const el=document.createElement("div");
@@ -157,8 +199,9 @@ function changesBanner(changes){
 async function startSearch(){
   const query=$("query").value.trim();
   if(!query) return;
-  state.query=query; state.lastAction=startSearch; setError(null); setLoading(true);
-  $("searchBtn").disabled=true;
+  state.query=query; state.lastAction=startSearch; setError(null);
+  setLoading(true, "Thinking…", "Calling the LLM for filters and rubric, then ranking matches.");
+  setStartButtonLoading(true);
   try{
     const data=await api("/api/search",{method:"POST",body:JSON.stringify({query})});
     if (!data.filters || !data.rubric) {
@@ -174,7 +217,10 @@ async function startSearch(){
       addChat("I found the first shortlist. Review the evidence and tell me what I got wrong or right.");
     }
   }catch(e){setError(e.message)}
-  finally{setLoading(false);$("searchBtn").disabled=false}
+  finally{
+    setLoading(false);
+    setStartButtonLoading(false);
+  }
 }
 async function applyEdits(){
   if(!state.sessionId || state.frozen)return;
